@@ -19,7 +19,7 @@ my-running-mcp/
 ├── mcp_runner.py            # (Optional) Claude-compatible MCP tool
 ├── strava_sync.py           # Script to fetch + save runs to DB
 ├── database/
-│   └── running.db           # SQLite database file
+│   └── running.db           # SQLite database file (sibling folder to my-running-mcp)
 ├── models/
 │   └── recommender.py       # Recommendation logic
 ├── mcp_server.py            # FastAPI endpoint for recommendations
@@ -60,6 +60,7 @@ python3 strava_sync.py
 ```
 
 This will:
+
 - Exchange your auth code for an access token
 - Fetch your recent Strava activities
 - Store them in `database/running.db`
