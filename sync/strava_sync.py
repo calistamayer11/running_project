@@ -55,7 +55,8 @@ def save_runs_to_db(activities, user_id):
             date TEXT,
             distance_miles REAL,
             pace_min_per_mile REAL,
-            notes TEXT
+            notes TEXT, 
+            average_heartrate INTEGER
         );
         """
     )
@@ -72,7 +73,7 @@ def save_runs_to_db(activities, user_id):
             continue
         pace_min_per_mile = round(1609.34 / avg_speed / 60, 2)
         notes = act.get("name", "")
-
+        heartrate = act.get("average_heartrate")
         # check if same user/date/distance exists
         cur.execute(
             """
@@ -85,10 +86,10 @@ def save_runs_to_db(activities, user_id):
 
         cur.execute(
             """
-            INSERT INTO runs (user_id, date, distance_miles, pace_min_per_mile, notes)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO runs (user_id, date, distance_miles, pace_min_per_mile, notes, average_heartrate)
+            VALUES (?, ?, ?, ?, ?, ?)
             """,
-            (user_id, date, distance_miles, pace_min_per_mile, notes),
+            (user_id, date, distance_miles, pace_min_per_mile, notes, heartrate),
         )
 
     conn.commit()
@@ -100,7 +101,7 @@ def main():
     token, user_id = get_access_token()
     activities = fetch_runs(token)
     save_runs_to_db(activities, user_id)
-    print("✅ Strava data synced to database.")
+    print("Strava data synced to database.")
 
 
 if __name__ == "__main__":
