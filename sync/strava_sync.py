@@ -4,6 +4,10 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 import os
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "..", "database", "running.db")
 
 load_dotenv()  # loads variables from .env file
 
